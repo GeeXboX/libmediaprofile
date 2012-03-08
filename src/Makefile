@@ -33,6 +33,7 @@ endif
 
 SRCS =  \
         mediaprofile.c \
+        mediaprofile_internals.c \
 
 OBJS = $(SRCS:.c=.o)
 

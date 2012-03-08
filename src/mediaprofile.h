@@ -84,6 +84,9 @@ typedef struct media_profile_s {
 
 } media_profile_t;
 
+media_profile_t *media_profile_guess (const char *filename);
+void media_profile_free (media_profile_t *media);
+
 #ifdef __cplusplus
 #if 0 /* avoid EMACS indent */
 {
