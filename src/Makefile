@@ -34,6 +34,8 @@ endif
 SRCS =  \
         mediaprofile.c \
         mediaprofile_internals.c \
+	reader.c \
+        png.c \
         mp3.c \
 
 OBJS = $(SRCS:.c=.o)

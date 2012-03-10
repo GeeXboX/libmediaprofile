@@ -5,10 +5,14 @@
 
 #include "mediaprofile_internals.h"
 
+/* image parsers */
+extern mp_parser_t mp_parser_png;
+
 /* audio parsers */
 extern mp_parser_t mp_parser_mp3;
 
 static mp_parser_t *mp_parsers[] = {
+  &mp_parser_png,
   &mp_parser_mp3,
   NULL,
 };
@@ -17,10 +21,10 @@ static void
 mp_file_parse (media_profile_t *mp, const char *filename)
 {
   mp_parser_t **p;
-  FILE *f;
+  mp_stream_t *s;
   int err;
 
-  f = fopen (filename, "r");
+  s = mp_stream_open (filename);
 
   p = mp_parsers;
   while (*p)
@@ -30,16 +34,19 @@ mp_file_parse (media_profile_t *mp, const char *filename)
       goto next;
 
     printf ("Found Parser: %s\n", (*p)->name);
-    err = (*p)->parse (mp, NULL);
+    err = (*p)->parse (mp, s);
     if (err == MP_PARSER_OK)
+    {
+      mp->type = (*p)->type;
       goto end;
+    }
 
   next:
     (void) *p++;
   }
 
 end:
-  fclose (f);
+  mp_stream_close (s);
 }
 
 media_profile_t *

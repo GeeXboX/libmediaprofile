@@ -1,7 +1,7 @@
 #include "mediaprofile_internals.h"
 
 static int
-mp3_parser (media_profile_t *p, FILE *f)
+mp3_parser (media_profile_t *p, mp_stream_t *s)
 {
   printf ("Parsing MP3 file ...\n");
 
