@@ -1,6 +1,8 @@
 #ifndef MEDIA_PROFILE_INTERNALS_H
 #define MEDIA_PROFILE_INTERNALS_H
 
+#include <stdio.h>
+
 #include "mediaprofile.h"
 
 #define MP_FREE(x) do { if (x) free (x); } while (0)
@@ -22,5 +24,17 @@ void mp_sub_free (media_profile_sub_t *sub);
 
 media_profile_t *mp_new (void);
 void mp_free (media_profile_t *mp);
+
+#define MP_PARSER_OK 0
+#define MP_PARSER_ERROR 1
+
+typedef struct mp_parser_s {
+  const char *name;
+  media_profile_type_t type;
+  const char *extensions;
+  int (*parse) (media_profile_t *p, FILE *f);
+} mp_parser_t;
+
+int mp_file_extension_match (const char *filename, const char *extensions);
 
 #endif /* MEDIA_PROFILE_INTERNALS_H */

@@ -1,4 +1,6 @@
 #include <stdlib.h>
+#include <string.h>
+#include <strings.h>
 
 #include "mediaprofile_internals.h"
 
@@ -123,4 +125,36 @@ mp_free (media_profile_t *mp)
   mp_sub_free (mp->sub);
 
   MP_FREE (mp);
+}
+
+int
+mp_file_extension_match (const char *filename, const char *extensions)
+{
+    const char *ext, *e;
+    char ext1[32], *q;
+
+    if (!filename || !extensions)
+      return MP_PARSER_ERROR;
+
+    ext = strrchr (filename, '.');
+    if (!ext)
+      return MP_PARSER_ERROR;
+
+    ext++;
+    e = extensions;
+
+    for (;;)
+    {
+      q = ext1;
+      while ((*e != '\0' ) && (*e != ',' ) && (q - ext1 < sizeof (ext1) - 1))
+        *q++ = *e++;
+      *q = '\0';
+      if (!strcasecmp (ext1, ext))
+        return MP_PARSER_OK;
+      if (*e == '\0')
+        break;
+      e++;
+    }
+
+    return MP_PARSER_ERROR;
 }

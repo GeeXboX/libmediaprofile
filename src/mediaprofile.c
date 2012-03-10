@@ -5,6 +5,43 @@
 
 #include "mediaprofile_internals.h"
 
+/* audio parsers */
+extern mp_parser_t mp_parser_mp3;
+
+static mp_parser_t *mp_parsers[] = {
+  &mp_parser_mp3,
+  NULL,
+};
+
+static void
+mp_file_parse (media_profile_t *mp, const char *filename)
+{
+  mp_parser_t **p;
+  FILE *f;
+  int err;
+
+  f = fopen (filename, "r");
+
+  p = mp_parsers;
+  while (*p)
+  {
+    err = mp_file_extension_match (filename, (*p)->extensions);
+    if (err != MP_PARSER_OK)
+      goto next;
+
+    printf ("Found Parser: %s\n", (*p)->name);
+    err = (*p)->parse (mp, NULL);
+    if (err == MP_PARSER_OK)
+      goto end;
+
+  next:
+    (void) *p++;
+  }
+
+end:
+  fclose (f);
+}
+
 media_profile_t *
 media_profile_guess (const char *filename)
 {
@@ -25,6 +62,7 @@ media_profile_guess (const char *filename)
   mp->type = MEDIA_PROFILE_TYPE_UNKNOWN;
 
   /* now extract file information */
+  mp_file_parse (mp, filename);
 
   return mp;
 }
