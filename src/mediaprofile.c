@@ -6,12 +6,14 @@
 #include "mediaprofile_internals.h"
 
 /* image parsers */
+extern mp_parser_t mp_parser_bmp;
 extern mp_parser_t mp_parser_png;
 
 /* audio parsers */
 extern mp_parser_t mp_parser_mp3;
 
 static mp_parser_t *mp_parsers[] = {
+  &mp_parser_bmp,
   &mp_parser_png,
   &mp_parser_mp3,
   NULL,

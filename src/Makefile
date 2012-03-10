@@ -35,6 +35,7 @@ SRCS =  \
         mediaprofile.c \
         mediaprofile_internals.c \
 	reader.c \
+        bmp.c \
         png.c \
         mp3.c \
 
