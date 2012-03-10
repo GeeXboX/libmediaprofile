@@ -4,6 +4,14 @@
 #define MP_FOURCC(a,b,c,d) \
   ((a) | ((b) << 8) | ((c) << 16) | ((unsigned)(d) << 24))
 
+#define MP_RD_BE16(x)                                \
+  (((uint16_t)((const uint8_t*)(x))[0] << 8) |       \
+              ((const uint8_t*)(x))[1])
+
+#define MP_RD_LE16(x)                                \
+  (((uint16_t)((const uint8_t*)(x))[1] << 8) |       \
+              ((const uint8_t*)(x))[0])
+
 #define MP_RD_BE32(x)                                \
   (((uint32_t)((const uint8_t*)(x))[0] << 24) |      \
              (((const uint8_t*)(x))[1] << 16) |      \
@@ -24,6 +32,9 @@ mp_stream_t *mp_stream_open (const char *filename);
 void mp_stream_skip (mp_stream_t *s, int len);
 uint8_t *mp_stream_get_buffer (mp_stream_t *s, int len);
 uint8_t mp_stream_get_u8 (mp_stream_t *s);
+
+uint16_t mp_stream_get_le16 (mp_stream_t *s);
+uint16_t mp_stream_get_be16 (mp_stream_t *s);
 
 uint32_t mp_stream_get_le32 (mp_stream_t *s);
 uint32_t mp_stream_get_be32 (mp_stream_t *s);
