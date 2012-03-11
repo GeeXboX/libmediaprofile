@@ -19,6 +19,15 @@ mp_stream_open (const char *filename)
 }
 
 void
+mp_stream_seek (mp_stream_t *s, int len)
+{
+  if (!s)
+    return;
+
+  fseek (s->f, len, SEEK_SET);
+}
+
+void
 mp_stream_skip (mp_stream_t *s, int len)
 {
   if (!s)
