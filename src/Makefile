@@ -37,6 +37,7 @@ SRCS =  \
 	reader.c \
         bmp.c \
         png.c \
+        jpg.c \
         mp3.c \
 
 OBJS = $(SRCS:.c=.o)
