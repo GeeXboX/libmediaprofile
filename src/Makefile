@@ -38,6 +38,7 @@ SRCS =  \
         bmp.c \
         png.c \
         jpg.c \
+        tiff.c \
         mp3.c \
 
 OBJS = $(SRCS:.c=.o)
