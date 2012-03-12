@@ -45,6 +45,7 @@ typedef struct media_profile_audio_s {
   uint32_t bits;
   uint32_t channels;
   uint32_t samplerate;
+  uint8_t vbr;
 } media_profile_audio_t;
 
 typedef struct media_profile_video_s {
