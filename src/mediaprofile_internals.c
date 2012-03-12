@@ -44,6 +44,19 @@ mp_audio_free (media_profile_audio_t *audio)
   MP_FREE (audio);
 }
 
+void
+mp_add_audio_stream (media_profile_t *mp, media_profile_audio_t *a)
+{
+  if (!mp || !a)
+    return;
+
+  mp->nr_audio_streams++;
+  mp->audio =
+    realloc (mp->audio,
+             mp->nr_audio_streams * sizeof (media_profile_audio_t *));
+  mp->audio[mp->nr_audio_streams - 1] = a;
+}
+
 media_profile_video_t *
 mp_video_new (void)
 {
@@ -59,6 +72,19 @@ mp_video_free (media_profile_video_t *video)
 
   MP_FREE (video->codec);
   MP_FREE (video);
+}
+
+void
+mp_add_video_stream (media_profile_t *mp, media_profile_video_t *v)
+{
+  if (!mp || !v)
+    return;
+
+  mp->nr_video_streams++;
+  mp->video =
+    realloc (mp->video,
+             mp->nr_video_streams * sizeof (media_profile_video_t *));
+  mp->video[mp->nr_video_streams - 1] = v;
 }
 
 media_profile_image_t *
