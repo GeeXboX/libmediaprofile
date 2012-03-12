@@ -7,6 +7,7 @@ main (int argc, char **argv)
 {
   media_profile_t *mp;
   const char *media_type;
+  int i;
 
   if (argc != 2)
   {
@@ -52,6 +53,27 @@ main (int argc, char **argv)
     printf ("  Width:\t\t%d pixels\n", mp->img->width);
     printf ("  Height:\t\t%d pixels\n", mp->img->height);
     printf ("  Depth:\t\t%d bits\n", mp->img->depth);
+  }
+
+  if (mp->nr_audio_channels > 0)
+  {
+    for (i = 0; i < mp->nr_audio_channels; i++)
+    {
+      media_profile_audio_t *a = mp->audio[i];
+
+      if (!a)
+        continue;
+
+      printf ("Audio Stream #%d Properties:\n", i);
+      printf ("  Codec:\t\t%s\n", a->codec);
+      printf ("  Length:\t\t%d seconds\n", a->length);
+      printf ("  Bitrate:\t\t%d bps\n", a->bitrate);
+      printf ("  Bits:\t\t\t%d bits\n", a->bits);
+      printf ("  Channels:\t\t%d ch\n", a->channels);
+      printf ("  Samplerate:\t\t%d Hz\n", a->samplerate);
+      printf ("  VBR:\t\t\t%s\n", a->vbr ? "Yes" : "No");
+      printf ("\n");
+    }
   }
 
   media_profile_free (mp);
