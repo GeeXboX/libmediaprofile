@@ -126,10 +126,7 @@ mp3_parser (media_profile_t *p, mp_stream_t *s)
   audio->vbr        = vbr;
 
   /* assign audio stream properties */
-  p->nr_audio_streams++;
-  p->audio = realloc (p->audio,
-                      p->nr_audio_streams * sizeof (media_profile_audio_t *));
-  p->audio[0] = audio;
+  mp_add_audio_stream (p, audio);
 
   return MP_PARSER_OK;
 }
