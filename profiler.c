@@ -46,6 +46,19 @@ main (int argc, char **argv)
   printf ("  Media Type:\t\t%s\n", media_type);
   printf ("\n");
 
+  if (mp->meta)
+  {
+    printf ("Metadata:\n");
+    printf ("  Title:\t\t%s\n", mp->meta->title);
+    printf ("  Artist:\t\t%s\n", mp->meta->artist);
+    printf ("  Genre:\t\t%s\n", mp->meta->genre);
+    printf ("  Album:\t\t%s\n", mp->meta->album);
+    printf ("  Year:\t\t\t%s\n", mp->meta->year);
+    printf ("  Track:\t\t%s\n", mp->meta->track);
+    printf ("  Comment:\t\t%s\n", mp->meta->comment);
+    printf ("\n");
+  }
+
   if (mp->img)
   {
     printf ("Image Properties:\n");
