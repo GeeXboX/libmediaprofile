@@ -120,7 +120,7 @@ mp3_parser (media_profile_t *p, mp_stream_t *s)
   audio             = mp_audio_new ();
   audio->codec      = strdup ("MP3");
   audio->length     = p->size / bps;
-  audio->bitrate    = bitrate / frames;
+  audio->bitrate    = (bitrate && frames) ? bitrate / frames : 0;
   audio->channels   = channels;
   audio->samplerate = frequency;
   audio->vbr        = vbr;
