@@ -75,7 +75,8 @@ mp3_parser (media_profile_t *p, mp_stream_t *s)
 
     /* read next MPEG Audio marker */
     header = mp_stream_get_be32 (s);
-    while ((header & MPEG_MARKER) != MPEG_MARKER)
+    while (((header & MPEG_MARKER) != MPEG_MARKER)
+           && !mp_stream_reached_eof (s))
     {
       mp_stream_skip (s, -3);
       header = mp_stream_get_be32 (s);
