@@ -55,9 +55,9 @@ main (int argc, char **argv)
     printf ("  Depth:\t\t%d bits\n", mp->img->depth);
   }
 
-  if (mp->nr_audio_channels > 0)
+  if (mp->nr_audio_streams > 0)
   {
-    for (i = 0; i < mp->nr_audio_channels; i++)
+    for (i = 0; i < mp->nr_audio_streams; i++)
     {
       media_profile_audio_t *a = mp->audio[i];
 

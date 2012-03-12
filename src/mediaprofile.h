@@ -74,10 +74,10 @@ typedef struct media_profile_s {
   media_profile_type_t type;
   media_profile_metadata_t *meta;
 
-  int nr_audio_channels;
+  int nr_audio_streams;
   media_profile_audio_t **audio;
 
-  int nr_video_channels;
+  int nr_video_streams;
   media_profile_video_t **video;
 
   media_profile_image_t *img;

@@ -113,11 +113,11 @@ mp_free (media_profile_t *mp)
 
   mp_metadata_free (mp->meta);
 
-  for (i = 0; i < mp->nr_audio_channels; i++)
+  for (i = 0; i < mp->nr_audio_streams; i++)
     mp_audio_free (mp->audio[i]);
   MP_FREE (mp->audio);
 
-  for (i = 0; i < mp->nr_video_channels; i++)
+  for (i = 0; i < mp->nr_video_streams; i++)
     mp_video_free (mp->video[i]);
   MP_FREE (mp->video);
 
