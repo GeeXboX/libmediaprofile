@@ -7,6 +7,7 @@
 #include <string.h>
 
 #include "mediaprofile_internals.h"
+#include "id3v1.h"
 
 #define MPEG_MARKER 0xFFF00000
 
@@ -128,6 +129,9 @@ mp3_parser (media_profile_t *p, mp_stream_t *s)
 
   /* assign audio stream properties */
   mp_add_audio_stream (p, audio);
+
+  /* check for ID3 tags */
+  p->meta = id3v1_parse (p, s);
 
   return MP_PARSER_OK;
 }
