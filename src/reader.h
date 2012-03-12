@@ -31,6 +31,8 @@ typedef struct mp_stream_s {
 mp_stream_t *mp_stream_open (const char *filename);
 void mp_stream_seek (mp_stream_t *s, int len);
 void mp_stream_skip (mp_stream_t *s, int len);
+int mp_stream_reached_eof (mp_stream_t *s);
+int mp_stream_get_pos (mp_stream_t *s);
 uint8_t *mp_stream_get_buffer (mp_stream_t *s, int len);
 uint8_t mp_stream_get_u8 (mp_stream_t *s);
 

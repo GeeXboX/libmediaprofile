@@ -36,6 +36,24 @@ mp_stream_skip (mp_stream_t *s, int len)
   fseek (s->f, len, SEEK_CUR);
 }
 
+int
+mp_stream_reached_eof (mp_stream_t *s)
+{
+  if (!s)
+    return 1;
+
+  return feof (s->f);
+}
+
+int
+mp_stream_get_pos (mp_stream_t *s)
+{
+  if (!s)
+    return -1;
+
+  return ftell (s->f);
+}
+
 uint8_t
 mp_stream_get_u8 (mp_stream_t *s)
 {
