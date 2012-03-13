@@ -62,13 +62,14 @@ mpeg_audio_frequency_table[4][2] = {
 };
 
 static int
-mp3_parser (media_profile_t *p, mp_stream_t *s)
+mp3_parser (media_profile_t *p, mp_stream_t *s,
+            media_profile_verbosity_level_t v)
 {
   media_profile_audio_t *audio;
   int frames = 0, bitrate = 0, frequency = 0, channels = 0, vbr = 0;
   int current_btr, bps;
 
-  printf ("Parsing MP3 file ...\n");
+  MP_LOG_INFO (v, "Parsing MP3 file ...");
 
   while (!mp_stream_reached_eof (s))
   {
@@ -85,20 +86,20 @@ mp3_parser (media_profile_t *p, mp_stream_t *s)
 
     if ((header & MPEG_MARKER) == MPEG_MARKER)
     {
-      int v, btr, frame_size;
+      int vs, btr, frame_size;
 
       /* ensure we hit a valid MPEG Audio header sync mark */
       if (!mpeg_audio_header_sync_check (header))
         break;
 
       /* MPEG Audio version */
-      v = (header & 0xE0000) >> 17;
+      vs = (header & 0xE0000) >> 17;
 
       /* Audio Frequency */
-      frequency = mpeg_audio_frequency_table[(header & 0xC00) >> 10][v >> 2];
+      frequency = mpeg_audio_frequency_table[(header & 0xC00) >> 10][vs >> 2];
 
       /* Audio Bitrate */
-      btr = mpeg_audio_bitrate_table[v][(header & 0xF000) >> 12] * 1000;
+      btr = mpeg_audio_bitrate_table[vs][(header & 0xF000) >> 12] * 1000;
 
       /* check for variable bitrate */
       if (current_btr != 0 && btr != current_btr)

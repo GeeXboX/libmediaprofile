@@ -24,7 +24,8 @@ static mp_parser_t *mp_parsers[] = {
 };
 
 static void
-mp_file_parse (media_profile_t *mp, const char *filename)
+mp_file_parse (media_profile_t *mp,
+               const char *filename, media_profile_verbosity_level_t v)
 {
   mp_parser_t **p;
   mp_stream_t *s;
@@ -39,8 +40,8 @@ mp_file_parse (media_profile_t *mp, const char *filename)
     if (err != MP_PARSER_OK)
       goto next;
 
-    printf ("Found Parser: %s\n", (*p)->name);
-    err = (*p)->parse (mp, s);
+    MP_LOG_DEBUG (v, "Found Parser: %s", (*p)->name);
+    err = (*p)->parse (mp, s, v);
     if (err == MP_PARSER_OK)
     {
       mp->type = (*p)->type;
@@ -56,7 +57,7 @@ end:
 }
 
 media_profile_t *
-media_profile_guess (const char *filename)
+media_profile_guess (const char *filename, media_profile_verbosity_level_t v)
 {
   media_profile_t *mp = NULL;
   struct stat st;
@@ -75,7 +76,7 @@ media_profile_guess (const char *filename)
   mp->type = MEDIA_PROFILE_TYPE_UNKNOWN;
 
   /* now extract file information */
-  mp_file_parse (mp, filename);
+  mp_file_parse (mp, filename, v);
 
   return mp;
 }

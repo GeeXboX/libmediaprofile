@@ -17,14 +17,15 @@ static const uint8_t png_signature[8] = {
 };
 
 static int
-png_parser (media_profile_t *p, mp_stream_t *s)
+png_parser (media_profile_t *p, mp_stream_t *s,
+            media_profile_verbosity_level_t v)
 {
   media_profile_image_t *img;
   uint32_t tag, length,w, h;
   uint8_t depth, color_type;
   uint8_t *sig;
 
-  printf ("Parsing PNG file ...\n");
+  MP_LOG_INFO (v, "Parsing PNG file ...");
 
   /* check PNG signature */
   sig = mp_stream_get_buffer (s, 8);
@@ -41,11 +42,11 @@ png_parser (media_profile_t *p, mp_stream_t *s)
 
   tag = mp_stream_get_le32 (s);
 
-  printf ("png: tag=%c%c%c%c length=%u\n",
-          (tag & 0xff),
-          ((tag >> 8) & 0xff),
-          ((tag >> 16) & 0xff),
-          ((tag >> 24) & 0xff), length);
+  MP_LOG_DEBUG (v, "png: tag=%c%c%c%c length=%u",
+                (tag & 0xff),
+                ((tag >> 8) & 0xff),
+                ((tag >> 16) & 0xff),
+                ((tag >> 24) & 0xff), length);
 
   if (tag != MP_FOURCC ('I', 'H', 'D', 'R'))
     return MP_PARSER_ERROR;
@@ -55,8 +56,8 @@ png_parser (media_profile_t *p, mp_stream_t *s)
   depth      = mp_stream_get_u8   (s);
   color_type = mp_stream_get_u8   (s);
 
-  printf ("width: %d - height: %d\n", w, h);
-  printf ("depth: %d - color type: %d\n", depth, color_type);
+  MP_LOG_INFO (v, "width: %d - height: %d", w, h);
+  MP_LOG_INFO (v, "depth: %d - color type: %d", depth, color_type);
 
   img = mp_image_new ();
   img->codec  = strdup ("PNG");

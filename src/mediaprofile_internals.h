@@ -6,6 +6,7 @@
 
 #include "mediaprofile.h"
 #include "reader.h"
+#include "logs.h"
 
 #define MP_FREE(x) do { if (x) free (x); } while (0)
 
@@ -36,7 +37,8 @@ typedef struct mp_parser_s {
   const char *name;
   media_profile_type_t type;
   const char *extensions;
-  int (*parse) (media_profile_t *p, mp_stream_t *s);
+  int (*parse) (media_profile_t *p, mp_stream_t *s,
+                media_profile_verbosity_level_t v);
 } mp_parser_t;
 
 int mp_file_extension_match (const char *filename, const char *extensions);

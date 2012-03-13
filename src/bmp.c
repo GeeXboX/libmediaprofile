@@ -10,13 +10,14 @@
 #define HEADER_SIZE_OS2_V2 64
 
 static int
-bmp_parser (media_profile_t *p, mp_stream_t *s)
+bmp_parser (media_profile_t *p, mp_stream_t *s,
+            media_profile_verbosity_level_t v)
 {
   media_profile_image_t *img;
   unsigned int hsize, ihsize, depth;
   int width, height;
 
-  printf ("Parsing BMP file ...\n");
+  MP_LOG_INFO (v, "Parsing BMP file ...");
 
   /* check BMP signature */
   if (mp_stream_get_u8 (s) != 'B' || mp_stream_get_u8 (s) != 'M')

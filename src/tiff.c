@@ -94,7 +94,8 @@ tiff_get_bpp_by_type (mp_stream_t *s, int le,
 }
 
 static int
-tiff_parser (media_profile_t *p, mp_stream_t *s)
+tiff_parser (media_profile_t *p, mp_stream_t *s,
+             media_profile_verbosity_level_t v)
 {
   media_profile_image_t *img;
   int width, height, depth;
@@ -103,7 +104,7 @@ tiff_parser (media_profile_t *p, mp_stream_t *s)
   uint32_t offset;
   int i;
 
-  printf ("Parsing TIFF file ...\n");
+  MP_LOG_INFO (v, "Parsing TIFF file ...");
 
   /* check TIFF signature */
   sig = mp_stream_get_le16 (s);
@@ -123,7 +124,7 @@ tiff_parser (media_profile_t *p, mp_stream_t *s)
 
   /* find number of IFD tags */
   ifd_tags = tiff_get_u16 (s, le);
-  printf ("Offset: %d - Entries: %d\n", offset, ifd_tags);
+  MP_LOG_DEBUG (v, "Offset: %d - Entries: %d", offset, ifd_tags);
 
   for (i = 0; i < ifd_tags; i++)
   {
@@ -136,8 +137,8 @@ tiff_parser (media_profile_t *p, mp_stream_t *s)
     count = tiff_get_u32 (s, le);
     off   = tiff_get_u32 (s, le);
 
-    printf ("Tag: %x - Type: %d - Count: %d - Off: %d\n",
-            tag, type, count, off);
+    MP_LOG_DEBUG (v, "Tag: %x - Type: %d - Count: %d - Off: %d",
+                  tag, type, count, off);
 
     if (count == 1)
       value = tiff_get_value_by_type (s, le, type, off);

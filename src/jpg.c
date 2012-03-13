@@ -30,12 +30,13 @@ typedef enum {
 } jpeg_segment_t; /* segment type */
 
 static int
-jpg_parser (media_profile_t *p, mp_stream_t *s)
+jpg_parser (media_profile_t *p, mp_stream_t *s,
+            media_profile_verbosity_level_t v)
 {
   media_profile_image_t *img;
   int width, height, depth;
 
-  printf ("Parsing JPEG file ...\n");
+  MP_LOG_INFO (v, "Parsing JPEG file ...");
 
   /* check JPEG signature */
   if (mp_stream_get_u8 (s) != JPG_MARKER ||
@@ -54,7 +55,7 @@ jpg_parser (media_profile_t *p, mp_stream_t *s)
     if (segment_type < SEGMENT_TEM || segment_type > SEGMENT_COM)
       break;
 
-    printf ("TAG: %.2x\n", segment_type);
+    MP_LOG_DEBUG (v, "TAG: %.2x", segment_type);
 
     if (segment_type >= SEGMENT_APP0 && segment_type <= SEGMENT_APP15)
     {

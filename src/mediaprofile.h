@@ -20,6 +20,13 @@ extern "C" {
 #include <inttypes.h>
 #include <sys/types.h>
 
+typedef enum {
+  MEDIA_PROFILE_MSG_NONE,          /* no error messages */
+  MEDIA_PROFILE_MSG_ERROR,         /* may result in hazardous behavior */
+  MEDIA_PROFILE_MSG_INFO,          /* working operations */
+  MEDIA_PROFILE_MSG_DEBUG,         /* debugging messages */
+} media_profile_verbosity_level_t;
+
 typedef enum media_profile_type {
   MEDIA_PROFILE_TYPE_UNKNOWN,
   MEDIA_PROFILE_TYPE_AUDIO,
@@ -85,7 +92,8 @@ typedef struct media_profile_s {
 
 } media_profile_t;
 
-media_profile_t *media_profile_guess (const char *filename);
+media_profile_t *media_profile_guess (const char *filename,
+                                      media_profile_verbosity_level_t v);
 void media_profile_free (media_profile_t *media);
 
 #ifdef __cplusplus

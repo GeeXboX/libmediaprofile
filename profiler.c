@@ -1,27 +1,89 @@
 #include <stdio.h>
+#include <unistd.h>
+#include <stdlib.h>
+
+#define _GNU_SOURCE
+#include <getopt.h>
 
 #include "mediaprofile.h"
+
+#define APPNAME "media-profiler"
+
+#define PROFILER_OPTIONS                                \
+  APPNAME " for libmediaprofile\n"                      \
+  "\n"                                                  \
+  "Usage: " APPNAME " [-v verbosity] [-f file]\n"       \
+  "\n"                                                  \
+  "Options:\n"                                          \
+  " -h --help               this help\n"                \
+  " -v --verbose <level>    specify verbosity\n"        \
+  " -f --file <filename>    specify file\n"             \
+  "\n"
 
 int
 main (int argc, char **argv)
 {
   media_profile_t *mp;
   const char *media_type;
+  char *filename = NULL;
+  media_profile_verbosity_level_t v = MEDIA_PROFILE_MSG_NONE;
   int i;
 
-  if (argc != 2)
+  int c, index;
+  const char *const short_options = "hv:f:";
+  const struct option long_options [] = {
+    {"help",    no_argument,       0, 'h' },
+    {"verbose", required_argument, 0, 'v' },
+    {"file",    required_argument, 0, 'f' },
+    {0,         0,                 0,  0  }
+  };
+
+  if (argc == 1)
   {
-    printf ("Usage: %s filename\n", argv[0]);
+    printf (PROFILER_OPTIONS);
     return 1;
   }
 
-  mp = media_profile_guess (argv[1]);
+  /* command line argument processing */
+  while (1)
+  {
+    c = getopt_long (argc, argv, short_options, long_options, &index);
+
+    if (c == EOF)
+      break;
+
+    switch (c)
+    {
+    case 0:
+      /* opt = long_options[index].name; */
+      break;
+
+    case '?':
+    case 'h':
+      printf (PROFILER_OPTIONS);
+      return 0;
+
+    case 'v':
+      v = atoi (optarg);
+      break;
+
+    case 'f':
+      filename = optarg;
+      break;
+
+    default:
+      printf (PROFILER_OPTIONS);
+      return 1;
+    }
+  }
+
+  mp = media_profile_guess (filename, v);
   if (!mp)
     return 1;
 
   printf ("\n");
   printf ("Media Information:\n");
-  printf ("  Filename:\t\t%s\n", argv[1]);
+  printf ("  Filename:\t\t%s\n", filename);
   printf ("  Size:\t\t\t%jd bytes\n", mp->size);
 
   switch (mp->type)
