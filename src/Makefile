@@ -42,6 +42,8 @@ SRCS =  \
         tiff.c \
         id3v1.c \
         mp3.c \
+        ogg.c \
+        ogg_vorbis.c \
 
 OBJS = $(SRCS:.c=.o)
 

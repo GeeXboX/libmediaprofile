@@ -13,6 +13,7 @@ extern mp_parser_t mp_parser_tiff;
 
 /* audio parsers */
 extern mp_parser_t mp_parser_mp3;
+extern mp_parser_t mp_parser_ogg;
 
 static mp_parser_t *mp_parsers[] = {
   &mp_parser_bmp,
@@ -20,6 +21,7 @@ static mp_parser_t *mp_parsers[] = {
   &mp_parser_jpg,
   &mp_parser_tiff,
   &mp_parser_mp3,
+  &mp_parser_ogg,
   NULL,
 };
 
