@@ -24,6 +24,26 @@
              (((const uint8_t*)(x))[1] <<  8) |      \
               ((const uint8_t*)(x))[0])
 
+#define MP_RD_BE64(x)                                \
+  (((uint64_t)((const uint8_t*)(x))[0] << 56) |      \
+   ((uint64_t)((const uint8_t*)(x))[1] << 48) |      \
+   ((uint64_t)((const uint8_t*)(x))[2] << 40) |      \
+   ((uint64_t)((const uint8_t*)(x))[3] << 32) |      \
+   ((uint64_t)((const uint8_t*)(x))[4] << 24) |      \
+   ((uint64_t)((const uint8_t*)(x))[5] << 16) |      \
+   ((uint64_t)((const uint8_t*)(x))[6] <<  8) |      \
+    (uint64_t)((const uint8_t*)(x))[7])
+
+#define MP_RD_LE64(x)                                \
+  (((uint64_t)((const uint8_t*)(x))[7] << 56) |      \
+   ((uint64_t)((const uint8_t*)(x))[6] << 48) |      \
+   ((uint64_t)((const uint8_t*)(x))[5] << 40) |      \
+   ((uint64_t)((const uint8_t*)(x))[4] << 32) |      \
+   ((uint64_t)((const uint8_t*)(x))[3] << 24) |      \
+   ((uint64_t)((const uint8_t*)(x))[2] << 16) |      \
+   ((uint64_t)((const uint8_t*)(x))[1] <<  8) |      \
+    (uint64_t)((const uint8_t*)(x))[0])
+
 typedef struct mp_stream_s {
   FILE *f;
 } mp_stream_t;
@@ -41,6 +61,9 @@ uint16_t mp_stream_get_be16 (mp_stream_t *s);
 
 uint32_t mp_stream_get_le32 (mp_stream_t *s);
 uint32_t mp_stream_get_be32 (mp_stream_t *s);
+
+uint64_t mp_stream_get_le64 (mp_stream_t *s);
+uint64_t mp_stream_get_be64 (mp_stream_t *s);
 
 void mp_stream_close (mp_stream_t *s);
 

@@ -131,6 +131,32 @@ mp_stream_get_be32 (mp_stream_t *s)
   return r;
 }
 
+uint64_t
+mp_stream_get_le64 (mp_stream_t *s)
+{
+  uint8_t *buf;
+  uint64_t r;
+
+  buf = mp_stream_get_buffer (s, 8);
+  r = MP_RD_LE64 (buf);
+  MP_FREE (buf);
+
+  return r;
+}
+
+uint64_t
+mp_stream_get_be64 (mp_stream_t *s)
+{
+  uint8_t *buf;
+  uint64_t r;
+
+  buf = mp_stream_get_buffer (s, 8);
+  r = MP_RD_BE64 (buf);
+  MP_FREE (buf);
+
+  return r;
+}
+
 void
 mp_stream_close (mp_stream_t *s)
 {
