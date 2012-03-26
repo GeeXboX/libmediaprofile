@@ -13,9 +13,11 @@ static const unsigned char ogg_signature[5] = {
 };
 
 extern ogg_stream_t ogg_stream_vorbis;
+extern ogg_stream_t ogg_stream_flac;
 
 static ogg_stream_t *ogg_streams[] = {
   &ogg_stream_vorbis,
+  &ogg_stream_flac,
   NULL,
 };
 

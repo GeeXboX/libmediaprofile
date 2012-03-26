@@ -44,6 +44,7 @@ SRCS =  \
         mp3.c \
         ogg.c \
         ogg_vorbis.c \
+        ogg_flac.c \
 
 OBJS = $(SRCS:.c=.o)
 
