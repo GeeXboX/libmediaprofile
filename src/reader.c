@@ -106,6 +106,32 @@ mp_stream_get_be16 (mp_stream_t *s)
 }
 
 uint32_t
+mp_stream_get_le24 (mp_stream_t *s)
+{
+  uint8_t *buf;
+  uint32_t r;
+
+  buf = mp_stream_get_buffer (s, 3);
+  r = MP_RD_LE24 (buf);
+  MP_FREE (buf);
+
+  return r;
+}
+
+uint32_t
+mp_stream_get_be24 (mp_stream_t *s)
+{
+  uint8_t *buf;
+  uint32_t r;
+
+  buf = mp_stream_get_buffer (s, 3);
+  r = MP_RD_BE24 (buf);
+  MP_FREE (buf);
+
+  return r;
+}
+
+uint32_t
 mp_stream_get_le32 (mp_stream_t *s)
 {
   uint8_t *buf;

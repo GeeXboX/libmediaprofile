@@ -12,6 +12,16 @@
   (((uint16_t)((const uint8_t*)(x))[1] << 8) |       \
               ((const uint8_t*)(x))[0])
 
+#define MP_RD_BE24(x)                                \
+            ((((const uint8_t*)(x))[0] << 16) |      \
+             (((const uint8_t*)(x))[1] <<  8) |      \
+              ((const uint8_t*)(x))[2])
+
+#define MP_RD_LE24(x)                                \
+            ((((const uint8_t*)(x))[2] << 16) |      \
+             (((const uint8_t*)(x))[1] <<  8) |      \
+              ((const uint8_t*)(x))[0])
+
 #define MP_RD_BE32(x)                                \
   (((uint32_t)((const uint8_t*)(x))[0] << 24) |      \
              (((const uint8_t*)(x))[1] << 16) |      \
@@ -58,6 +68,9 @@ uint8_t mp_stream_get_u8 (mp_stream_t *s);
 
 uint16_t mp_stream_get_le16 (mp_stream_t *s);
 uint16_t mp_stream_get_be16 (mp_stream_t *s);
+
+uint32_t mp_stream_get_le24 (mp_stream_t *s);
+uint32_t mp_stream_get_be24 (mp_stream_t *s);
 
 uint32_t mp_stream_get_le32 (mp_stream_t *s);
 uint32_t mp_stream_get_be32 (mp_stream_t *s);
